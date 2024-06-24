@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contador Regresivo con Fondo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            height: 100vh; /* Altura del cuerpo igual al 100% del viewport */
+            margin: 0; /* Elimina el margen predeterminado del cuerpo */
+            display: flex;
+            flex-direction: column; /* Organiza los elementos en columna */
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(to bottom, #4e148c, #000000); /* Fondo degradado morado a negro */
+            color: white; /* Color de letra blanco */
+            text-align: center; /* Alineación central del texto */
+        }
+        #countdown {
+            font-size: 2em;
+            margin-top: 20px; /* Espacio superior entre texto y contador */
+        }
+    </style>
+</head>
+<body>
+    <h1>Contador Regresivo</h1>
+    <div id="countdown">00:00:00</div>
+    
+    <script>
+        // Definir la fecha objetivo para el contador (año, mes-1, día, hora, minuto, segundo)
+        const targetDate = new Date("Aug 20, 2024 20:00:00").getTime();
+
+        // Actualizar el contador cada segundo
+        const x = setInterval(function() {
+            // Obtener la fecha y hora actual
+            const now = new Date().getTime();
+            
+            // Calcular la distancia entre la fecha objetivo y la fecha actual
+            const distance = targetDate - now;
+            
+            // Calcular el tiempo restante en días, horas, minutos y segundos
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            
+            // Mostrar el contador en el elemento con id="countdown"
+            document.getElementById("countdown").innerHTML = 
+                ("0" + days).slice(-2) + "d " + 
+                ("0" + hours).slice(-2) + "h " + 
+                ("0" + minutes).slice(-2) + "m " + 
+                ("0" + seconds).slice(-2) + "s ";
+
+            // Si el contador llega a cero, mostrar un mensaje
+            if (distance < 0) {
+                clearInterval(x);
+                document.getElementById("countdown").innerHTML = "EXPIRADO";
+            }
+        }, 1000); // Actualizar cada segundo (1000 milisegundos)
+    </script>
+</body>
+</html>
